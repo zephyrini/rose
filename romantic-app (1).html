@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Our Love Story ❤️</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,700;1,500&family=Great+Vibes&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --rose-300: #fda4af; --rose-400: #fb7185; --rose-500: #f43f5e;
+      --pink-300: #f9a8d4; --pink-400: #f472b6; --pink-500: #ec4899;
+      --yellow-400: #facc15;
+      --bg: #fff1f2; --fg: #1f1f1f; --muted: #6b6b6b;
+      --primary: #f43f5e; --primary-light: rgba(244, 63, 94, 0.1);
+    }
+
+    body {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      background: linear-gradient(135deg, #fff1f2 0%, #fce7f3 25%, #fdf2f8 50%, #fff1f2 75%, #ffe4e6 100%);
+      min-height: 100vh;
+      color: var(--fg);
+      overflow-x: hidden;
+    }
+
+    .font-romantic { font-family: 'Cormorant Garamond', serif; font-weight: 500; }
+    .font-name { font-family: 'Playfair Display', serif; font-weight: 600; }
+    .font-script { font-family: 'Great Vibes', cursive; }
+
+    .page { display: none; min-height: 100vh; }
+    .page.active { display: block; }
+
+    /* Glass Card */
+    .glass-card {
+      background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(253,242,248,0.95));
+      border: 1px solid rgba(244, 114, 182, 0.2);
+      box-shadow: 0 10px 40px rgba(244, 63, 94, 0.1);
+    }
+
+    /* Input */
+    input[type="text"] {
+      width: 100%;
+      padding: 1rem;
+      font-size: 1.125rem;
+      text-align: center;
+      border: 2px solid rgba(244, 114, 182, 0.3);
+      border-radius: 1rem;
+      background: rgba(255,255,255,0.7);
+      font-family: inherit;
+      outline: none;
+      transition: all 0.3s;
+    }
+    input:focus { border-color: var(--primary); box-shadow: 0 0 20px rgba(244, 63, 94, 0.2); }
+    input.error { border-color: #ef4444; animation: shake 0.5s; }
+
+    /* Button */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+      padding: 1rem 2rem;
+      font-size: 1.125rem;
+      font-family: 'Cormorant Garamond', serif;
+      color: white;
+      background: linear-gradient(135deg, var(--rose-400), var(--pink-500));
+      border: none;
+      border-radius: 1rem;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .btn:hover { transform: scale(1.05); box-shadow: 0 10px 30px rgba(244, 63, 94, 0.3); }
+    .btn:disabled { opacity: 0.7; transform: none; }
+
+    .btn-nav {
+      width: 100%;
+      padding: 1.5rem;
+      text-align: left;
+      border-radius: 1.5rem;
+    }
+
+    .btn-back {
+      position: fixed;
+      top: 1rem; left: 1rem;
+      padding: 0.75rem;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.8);
+      border: 1px solid rgba(244, 114, 182, 0.2);
+      z-index: 50;
+    }
+    .btn-back:hover { background: white; }
+
+    /* Animations */
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+    @keyframes kissFloat {
+      0%, 100% { transform: translateY(0) rotate(-5deg); }
+      50% { transform: translateY(-15px) rotate(5deg); }
+    }
+    @keyframes kissRain {
+      0% { transform: translateY(-20px) rotate(0deg); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+    }
+    @keyframes kissText {
+      0% { opacity: 0; transform: scale(0.5) translateY(0); }
+      50% { opacity: 1; transform: scale(1.2) translateY(-30px); }
+      100% { opacity: 0; transform: scale(1) translateY(-60px); }
+    }
+    @keyframes flyFromLeft {
+      0% { transform: translateX(-60vw) scale(0.5); opacity: 0; }
+      50% { opacity: 1; transform: translateX(-10vw) scale(1); }
+      100% { transform: translateX(0) scale(0.6); opacity: 0; }
+    }
+    @keyframes flyFromRight {
+      0% { transform: translateX(60vw) scale(0.5); opacity: 0; }
+      50% { opacity: 1; transform: translateX(10vw) scale(1); }
+      100% { transform: translateX(0) scale(0.6); opacity: 0; }
+    }
+    @keyframes mergeReveal {
+      from { opacity: 0; transform: scale(0.5); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    @keyframes viniReveal {
+      0% { opacity: 0; transform: scale(0.3) translateY(20px); }
+      60% { transform: scale(1.1) translateY(-10px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    @keyframes permanentFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    @keyframes buttonPulse {
+      0%, 100% { box-shadow: 0 10px 40px rgba(244, 63, 94, 0.4); }
+      50% { box-shadow: 0 15px 50px rgba(244, 63, 94, 0.6); }
+    }
+    @keyframes sparkle {
+      0%, 100% { opacity: 0.4; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.3); }
+    }
+
+    .float { animation: float 3s ease-in-out infinite; }
+    .fade-in { animation: fadeIn 0.6s ease-out forwards; }
+    .slide-up { animation: slideUp 0.6s ease-out forwards; }
+    .pulse { animation: pulse 1.5s ease-in-out infinite; }
+    .permanent-float { animation: permanentFloat 4s ease-in-out infinite; }
+
+    /* Text Gradient */
+    .text-gradient {
+      background: linear-gradient(135deg, var(--rose-400), var(--pink-500));
+      -webkit-background-clip: text; background-clip: text;
+      color: transparent;
+    }
+
+    /* Page Specific Styles */
+    .nav-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; }
+    .nav-card { display: flex; align-items: center; gap: 1rem; }
+    .nav-emoji { font-size: 2rem; }
+    .nav-info h3 { font-size: 1.25rem; color: var(--fg); margin-bottom: 0.25rem; }
+    .nav-info p { font-size: 0.875rem; color: var(--muted); }
+
+    .timeline { position: relative; padding-left: 2rem; }
+    .timeline::before {
+      content: ''; position: absolute;
+      left: 0.5rem; top: 0; bottom: 0;
+      width: 2px; background: rgba(244, 63, 94, 0.3);
+    }
+    .timeline-item { position: relative; margin-bottom: 2rem; }
+    .timeline-dot {
+      position: absolute; left: -1.5rem; top: 0.5rem;
+      width: 1rem; height: 1rem;
+      background: var(--primary);
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    .timeline-date { font-size: 0.75rem; color: var(--primary); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; }
+    .timeline-title { font-size: 1.125rem; margin: 0.5rem 0; }
+    .timeline-desc { color: var(--muted); font-size: 0.9rem; line-height: 1.6; }
+
+    .reason-card { display: flex; align-items: center; gap: 1rem; padding: 1.25rem; margin-bottom: 0.75rem; border-radius: 1rem; }
+
+    /* For You Page */
+    .kiss-rain-container { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 10; }
+    .falling-kiss { position: absolute; font-size: 2rem; animation: kissRain 5s linear infinite; }
+    .center-kiss { font-size: 8rem; cursor: pointer; transition: transform 0.3s; animation: kissFloat 3s ease-in-out infinite; }
+    .center-kiss:hover { transform: scale(1.2); }
+    .kiss-text { position: absolute; font-size: 3rem; color: var(--primary); animation: kissText 2s ease-out forwards; pointer-events: none; }
+
+    /* Forever Page Specific */
+    .forever-quotes { max-width: 40rem; margin: 0 auto; text-align: center; }
+    .forever-quote { font-size: 1.5rem; font-style: italic; color: var(--fg); margin-bottom: 1.5rem; opacity: 0; }
+    .quote-mark { color: rgba(244, 114, 182, 0.5); }
+
+    .seal-btn {
+      padding: 1.25rem 3rem;
+      font-size: 1.25rem;
+      border-radius: 9999px;
+      animation: buttonPulse 2s ease-in-out infinite;
+    }
+
+    .merge-overlay {
+      position: fixed; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(131, 24, 67, 0.2), rgba(0,0,0,0.3));
+      backdrop-filter: blur(8px);
+      z-index: 100;
+    }
+
+    .flying-heart {
+      position: absolute;
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .flying-heart.left { animation: flyFromLeft 2s ease-out forwards; }
+    .flying-heart.right { animation: flyFromRight 2s ease-out forwards; }
+    .flying-heart svg { width: 10rem; height: 10rem; filter: drop-shadow(0 0 30px currentColor); }
+    .flying-heart span { position: absolute; top: 50%; transform: translateY(-50%); font-size: 1.25rem; color: white; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+
+    .merge-center { opacity: 0; animation: mergeReveal 1s ease-out 2s forwards; }
+    .merge-center svg { width: 14rem; height: 14rem; filter: drop-shadow(0 0 40px var(--pink-500)); animation: pulse 1.5s ease-in-out infinite; }
+
+    .vini-reveal { position: absolute; display: flex; flex-direction: column; align-items: center; opacity: 0; animation: viniReveal 1.5s ease-out 3s forwards; }
+    .vini-text { font-family: 'Great Vibes', cursive; font-size: 6rem; background: linear-gradient(135deg, var(--rose-300), var(--pink-400), var(--rose-500)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+    .forever-final { text-align: center; padding: 3rem 2rem; }
+    .forever-card-final { padding: 3rem 2rem; border-radius: 2rem; max-width: 40rem; margin: 0 auto; }
+    .name-row { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-bottom: 1rem; animation: permanentFloat 4s ease-in-out infinite; }
+    .name-row svg { width: 2.5rem; height: 2.5rem; filter: drop-shadow(0 0 15px currentColor); }
+    .name-text { font-family: 'Playfair Display', serif; font-size: 2.5rem; }
+    .name-vicky { color: var(--rose-500); }
+    .name-roshni { color: var(--pink-500); }
+    .connector { display: flex; align-items: center; justify-content: center; gap: 0.75rem; padding: 0.75rem 0; }
+    .connector-line { width: 4rem; height: 1px; background: linear-gradient(90deg, transparent, var(--pink-400), transparent); }
+    .vini-final { font-family: 'Great Vibes', cursive; font-size: 5rem; background: linear-gradient(135deg, var(--rose-400), var(--pink-500)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .vini-subtitle { color: var(--muted); font-style: italic; font-size: 1.25rem; margin-top: 0.5rem; }
+    .forever-footer { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(244, 114, 182, 0.2); color: var(--muted); font-style: italic; }
+
+    @media (min-width: 768px) {
+      .forever-quote { font-size: 1.75rem; }
+      .flying-heart svg { width: 12rem; height: 12rem; }
+      .flying-heart span { font-size: 1.5rem; }
+      .merge-center svg { width: 18rem; height: 18rem; }
+      .vini-text { font-size: 8rem; }
+      .name-text { font-size: 3rem; }
+      .vini-final { font-size: 6rem; }
+    }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== LOGIN PAGE ==================== -->
+  <div id="page-login" class="page active">
+    <div style="min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 1rem;">
+      <div class="glass-card" style="padding: 3rem; border-radius: 2rem; max-width: 400px; width: 100%; text-align: center;">
+        <div style="margin-bottom: 1.5rem;">
+          <svg class="float" style="width: 4rem; height: 4rem; color: var(--primary); margin: 0 auto; display: block;" viewBox="0 0 24 24"><path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        </div>
+        <h1 class="font-romantic" style="font-size: 1.75rem; margin-bottom: 0.5rem;">To enter this little world…</h1>
+        <p style="color: var(--muted); margin-bottom: 2rem;">type the secret word only we know ❤️</p>
+        <form id="login-form">
+          <input type="text" id="secret-input" placeholder="whisper the secret..." style="margin-bottom: 1rem;">
+          <p id="login-error" class="hidden" style="color: #ef4444; font-size: 0.875rem; margin-bottom: 1rem;">That's not it, my love... try again 💕</p>
+          <button type="submit" class="btn" style="width: 100%;">Enter Our World 💕</button>
+        </form>
+        <div style="margin-top: 2rem; display: flex; justify-content: center; gap: 1rem; opacity: 0.5;">
+          <span class="float" style="font-size: 1.5rem;">💋</span>
+          <span class="float" style="font-size: 1.5rem; animation-delay: 0.5s;">🤗</span>
+          <span class="float" style="font-size: 1.5rem; animation-delay: 1s;">🧸</span>
+          <span class="float" style="font-size: 1.5rem; animation-delay: 1.5s;">🕊️</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== DASHBOARD PAGE ==================== -->
+  <div id="page-dashboard" class="page">
+    <div style="min-height: 100vh; padding: 2rem;">
+      <div style="max-width: 56rem; margin: 0 auto;">
+        <div style="text-align: center; margin-bottom: 3rem; padding-top: 2rem;">
+          <div style="display: flex; justify-content: center; gap: 0.75rem; margin-bottom: 1.5rem;">
+            <span class="float" style="font-size: 2rem;">💋</span>
+            <span class="float" style="font-size: 2rem; animation-delay: 0.3s;">🤗</span>
+            <span class="float" style="font-size: 2rem; animation-delay: 0.6s;">🧸</span>
+            <span class="float" style="font-size: 2rem; animation-delay: 0.9s;">🕊️</span>
+          </div>
+          <h1 class="font-romantic fade-in" style="font-size: 2rem; margin-bottom: 0.5rem;">Hey… this little world exists just for you.</h1>
+          <p class="fade-in" style="color: var(--muted); animation-delay: 0.1s;">Every corner here is filled with my love for you ✨</p>
+          <svg class="pulse" style="width: 2rem; height: 2rem; color: var(--primary); margin: 1.5rem auto 0; display: block;" viewBox="0 0 24 24"><path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        </div>
+        <div class="nav-grid">
+          <button class="btn btn-nav glass-card slide-up" onclick="showPage('journey')" style="animation-delay: 0s;">
+            <div class="nav-card"><span class="nav-emoji">🕊️</span><div class="nav-info"><h3>Our Journey</h3><p>Walk through our memories</p></div></div>
+          </button>
+          <button class="btn btn-nav glass-card slide-up" onclick="showPage('what-i-love')" style="animation-delay: 0.1s;">
+            <div class="nav-card"><span class="nav-emoji">🧸</span><div class="nav-info"><h3>What I Love</h3><p>All the reasons why</p></div></div>
+          </button>
+          <button class="btn btn-nav glass-card slide-up" onclick="showPage('proposal')" style="animation-delay: 0.2s;">
+            <div class="nav-card"><span class="nav-emoji">💋</span><div class="nav-info"><h3>My Heart</h3><p>Words from my soul</p></div></div>
+          </button>
+          <button class="btn btn-nav glass-card slide-up" onclick="showPage('forever')" style="animation-delay: 0.3s;">
+            <div class="nav-card"><span class="nav-emoji">🤗</span><div class="nav-info"><h3>Forever</h3><p>Sign our eternal love</p></div></div>
+          </button>
+          <button class="btn btn-nav glass-card slide-up" onclick="showPage('for-you')" style="animation-delay: 0.4s;">
+            <div class="nav-card"><span class="nav-emoji">💕</span><div class="nav-info"><h3>For You</h3><p>A special surprise</p></div></div>
+          </button>
+        </div>
+        <div style="text-align: center; margin-top: 3rem;">
+          <p class="font-romantic" style="color: var(--muted); font-size: 0.875rem;">Made with all my love, just for you ❤️</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== JOURNEY PAGE ==================== -->
+  <div id="page-journey" class="page">
+    <button class="btn btn-back" onclick="showPage('dashboard')">
+      <svg style="width: 1.25rem; height: 1.25rem;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </button>
+    <div style="max-width: 40rem; margin: 0 auto; padding: 5rem 1rem 2rem;">
+      <div style="text-align: center; margin-bottom: 3rem;">
+        <span style="font-size: 2.5rem; display: block; margin-bottom: 1rem;">🕊️</span>
+        <h1 class="font-romantic fade-in" style="font-size: 2rem; margin-bottom: 0.5rem;">Our Journey Together</h1>
+        <p class="fade-in" style="color: var(--muted); animation-delay: 0.1s;">Every moment with you is a treasure ✨</p>
+      </div>
+      <div class="timeline">
+        <div class="timeline-item slide-up" style="animation-delay: 0s;"><div class="timeline-dot"></div><div class="glass-card" style="padding: 1.5rem; border-radius: 1rem;"><span class="timeline-date">The Beginning</span><h3 class="timeline-title font-romantic">When We First Met</h3><p class="timeline-desc">That magical moment when our eyes met and everything changed forever...</p></div></div>
+        <div class="timeline-item slide-up" style="animation-delay: 0.15s;"><div class="timeline-dot"></div><div class="glass-card" style="padding: 1.5rem; border-radius: 1rem;"><span class="timeline-date">First Date</span><h3 class="timeline-title font-romantic">Our First Adventure</h3><p class="timeline-desc">Nervous hearts, shy smiles, and the start of something beautiful...</p></div></div>
+        <div class="timeline-item slide-up" style="animation-delay: 0.3s;"><div class="timeline-dot"></div><div class="glass-card" style="padding: 1.5rem; border-radius: 1rem;"><span class="timeline-date">First 'I Love You'</span><h3 class="timeline-title font-romantic">Three Words, One Heart</h3><p class="timeline-desc">The moment those words escaped my lips, I knew you were my forever...</p></div></div>
+        <div class="timeline-item slide-up" style="animation-delay: 0.45s;"><div class="timeline-dot"></div><div class="glass-card" style="padding: 1.5rem; border-radius: 1rem;"><span class="timeline-date">Our Special Moments</span><h3 class="timeline-title font-romantic">Countless Memories</h3><p class="timeline-desc">Every laugh, every hug, every kiss has been a gift from heaven...</p></div></div>
+        <div class="timeline-item slide-up" style="animation-delay: 0.6s;"><div class="timeline-dot"></div><div class="glass-card" style="padding: 1.5rem; border-radius: 1rem;"><span class="timeline-date">Today & Forever</span><h3 class="timeline-title font-romantic">Still Falling</h3><p class="timeline-desc">And I'm still falling for you, deeper every single day...</p></div></div>
+      </div>
+      <div style="text-align: center; margin-top: 2rem;"><span class="pulse" style="font-size: 2.5rem;">❤️</span></div>
+    </div>
+  </div>
+
+  <!-- ==================== WHAT I LOVE PAGE ==================== -->
+  <div id="page-what-i-love" class="page">
+    <button class="btn btn-back" onclick="showPage('dashboard')">
+      <svg style="width: 1.25rem; height: 1.25rem;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </button>
+    <div style="max-width: 40rem; margin: 0 auto; padding: 5rem 1rem 2rem;">
+      <div style="text-align: center; margin-bottom: 3rem;">
+        <span style="font-size: 2.5rem; display: block; margin-bottom: 1rem;">🧸</span>
+        <h1 class="font-romantic fade-in" style="font-size: 2rem; margin-bottom: 0.5rem;">What I Love About You</h1>
+        <p class="fade-in" style="color: var(--muted); animation-delay: 0.1s;">Let me count the ways... 💕</p>
+      </div>
+      <div id="reasons-list"></div>
+      <div style="text-align: center; margin-top: 2rem;">
+        <p class="font-romantic" style="color: var(--muted); font-size: 0.875rem; margin-bottom: 1rem;">And a million more reasons I discover every day...</p>
+        <span class="pulse" style="font-size: 2.5rem;">💕</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== PROPOSAL PAGE ==================== -->
+  <div id="page-proposal" class="page">
+    <button class="btn btn-back" onclick="showPage('dashboard')">
+      <svg style="width: 1.25rem; height: 1.25rem;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </button>
+    <div style="min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 1rem;">
+      <div style="max-width: 32rem; text-align: center;">
+        <div style="display: flex; justify-content: center; gap: 1rem; margin-bottom: 2rem;">
+          <svg class="float" style="width: 1.5rem; height: 1.5rem; color: rgba(244, 63, 94, 0.5);" viewBox="0 0 24 24"><path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          <svg class="float" style="width: 2rem; height: 2rem; color: rgba(244, 63, 94, 0.7); animation-delay: 0.5s;" viewBox="0 0 24 24"><path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          <svg class="float" style="width: 1.5rem; height: 1.5rem; color: rgba(244, 63, 94, 0.5); animation-delay: 1s;" viewBox="0 0 24 24"><path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        </div>
+        <p class="font-romantic fade-in" style="color: var(--muted); font-size: 1.125rem; margin-bottom: 1.5rem;">From the bottom of my heart...</p>
+        <div class="glass-card slide-up" style="padding: 3rem; border-radius: 2rem; margin-bottom: 2rem; animation-delay: 0.2s;">
+          <h1 class="font-romantic text-gradient pulse" style="font-size: 4rem; margin-bottom: 1rem;">I Love You</h1>
+          <svg class="pulse" style="width: 3rem; height: 3rem; color: var(--primary); margin: 0 auto; display: block;" viewBox="0 0 24 24"><path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        </div>
+        <p class="font-romantic fade-in" style="font-size: 1.125rem; line-height: 1.8; animation-delay: 0.4s;">More than words could ever express, more than the stars in the sky, more than forever itself... You are my everything. ❤️</p>
+        <div style="display: flex; justify-content: center; gap: 1rem; margin-top: 3rem;">
+          <span class="float" style="font-size: 1.5rem;">💋</span>
+          <span class="float" style="font-size: 2rem; animation-delay: 0.3s;">❤️</span>
+          <span class="float" style="font-size: 1.5rem; animation-delay: 0.6s;">💋</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== FOREVER PAGE ==================== -->
+  <div id="page-forever" class="page">
+    <button class="btn btn-back" onclick="showPage('dashboard')">
+      <svg style="width: 1.25rem; height: 1.25rem;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </button>
+
+    <!-- Quotes Stage -->
+    <div id="forever-quotes" style="min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 1rem;">
+      <div class="forever-quotes">
+        <div class="forever-quote fade-in" style="animation-delay: 0s;"><span class="quote-mark">"</span>From now on, our hearts walk together — forever<span class="quote-mark">"</span> ❤️✨</div>
+        <div class="forever-quote fade-in" style="animation-delay: 0.4s;"><span class="quote-mark">"</span>You chose me, I chose you — forever<span class="quote-mark">"</span> 💖</div>
+        <div class="forever-quote fade-in" style="animation-delay: 0.8s;"><span class="quote-mark">"</span>unaku naa, enaku nee, nambuluku Vini kutti avloooo dhaa!!!<span class="quote-mark">"</span> 💕</div>
+        <div class="forever-quote fade-in" style="animation-delay: 1.2s;"><span class="quote-mark">"</span>Our forever contract — signed by hearts<span class="quote-mark">"</span> ✨❤️</div>
+        <div class="forever-quote fade-in" style="animation-delay: 1.6s;"><span class="quote-mark">"</span>No ink, no paper — just hearts<span class="quote-mark">"</span> 💞</div>
+        <button class="btn seal-btn fade-in" style="animation-delay: 2.2s; margin-top: 2rem;" onclick="startForeverMerge()">
+          <svg style="width: 1.5rem; height: 1.5rem; fill: currentColor;" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          Seal Our Forever
+          <svg style="width: 1.5rem; height: 1.5rem; fill: currentColor;" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        </button>
+        <div style="display: flex; justify-content: center; gap: 2rem; margin-top: 3rem;">
+          <svg class="float" style="width: 1.5rem; height: 1.5rem; color: var(--rose-300); filter: drop-shadow(0 0 8px var(--rose-300));" viewBox="0 0 24 24"><path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          <svg class="float" style="width: 2rem; height: 2rem; color: var(--pink-400); animation-delay: 0.6s; filter: drop-shadow(0 0 8px var(--pink-400));" viewBox="0 0 24 24"><path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          <svg class="float" style="width: 1.5rem; height: 1.5rem; color: var(--rose-300); animation-delay: 1.2s; filter: drop-shadow(0 0 8px var(--rose-300));" viewBox="0 0 24 24"><path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Merge Stage -->
+    <div id="forever-merge" class="merge-overlay hidden">
+      <div class="flying-heart left">
+        <svg style="color: var(--rose-400);" viewBox="0 0 24 24"><path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        <span class="font-name">Vicky paiya</span>
+      </div>
+      <div class="flying-heart right">
+        <svg style="color: var(--pink-400);" viewBox="0 0 24 24"><path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        <span class="font-name">Roshni ponne</span>
+      </div>
+      <div class="merge-center">
+        <svg style="color: var(--pink-500);" viewBox="0 0 24 24"><path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+      </div>
+      <div class="vini-reveal">
+        <span class="vini-text">Vini</span>
+        <div style="display: flex; gap: 0.75rem; margin-top: 1rem;">
+          <span style="font-size: 1.5rem; animation: sparkle 1s ease-in-out infinite;">✨</span>
+          <span style="font-size: 1.5rem; animation: pulse 1s ease-in-out infinite;">💖</span>
+          <span style="font-size: 1.5rem; animation: sparkle 1s ease-in-out infinite; animation-delay: 0.5s;">✨</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Final Stage -->
+    <div id="forever-final" class="forever-final hidden">
+      <div class="glass-card forever-card-final fade-in">
+        <div class="name-row">
+          <svg style="color: var(--rose-400);" viewBox="0 0 24 24"><path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          <span class="name-text name-vicky">Vicky paiya</span>
+          <svg style="color: var(--rose-400);" viewBox="0 0 24 24"><path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        </div>
+        <div class="connector">
+          <div class="connector-line"></div>
+          <svg class="pulse" style="width: 1.75rem; height: 1.75rem; color: var(--pink-500); fill: var(--pink-500); filter: drop-shadow(0 0 12px var(--pink-500));" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          <div class="connector-line"></div>
+        </div>
+        <div class="name-row" style="animation-delay: 0.5s;">
+          <svg style="color: var(--pink-400);" viewBox="0 0 24 24"><path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          <span class="name-text name-roshni">Roshni ponne</span>
+          <svg style="color: var(--pink-400);" viewBox="0 0 24 24"><path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        </div>
+        <div style="display: flex; justify-content: center; gap: 1rem; padding: 1.5rem 0;">
+          <span class="float" style="font-size: 1rem; color: var(--yellow-400);">⭐</span>
+          <span class="float" style="font-size: 1.25rem; color: var(--yellow-400); animation-delay: 0.2s;">✨</span>
+          <svg class="pulse" style="width: 2.5rem; height: 2.5rem; color: var(--rose-500); fill: var(--rose-500); filter: drop-shadow(0 0 20px var(--rose-500));" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          <span class="float" style="font-size: 1.25rem; color: var(--yellow-400); animation-delay: 0.4s;">✨</span>
+          <span class="float" style="font-size: 1rem; color: var(--yellow-400); animation-delay: 0.6s;">⭐</span>
+        </div>
+        <div style="padding: 1rem 0;">
+          <div class="name-row" style="animation-delay: 1s;">
+            <span style="font-size: 2.5rem;">💖</span>
+            <span class="vini-final">Vini</span>
+            <span style="font-size: 2.5rem;">💖</span>
+          </div>
+          <p class="vini-subtitle">Our love, our life, our everything ✨</p>
+        </div>
+        <div class="forever-footer">
+          <p>This love is eternal... sealed in hearts forever 💕</p>
+        </div>
+      </div>
+      <div style="display: flex; justify-content: center; gap: 1.25rem; margin-top: 2.5rem;">
+        <svg class="float" style="width: 1rem; height: 1rem; color: rgba(253, 164, 175, 0.5);" viewBox="0 0 24 24"><path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        <svg class="float" style="width: 1.5rem; height: 1.5rem; color: rgba(244, 114, 182, 0.6); animation-delay: 0.3s;" viewBox="0 0 24 24"><path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        <svg class="float" style="width: 2rem; height: 2rem; color: rgba(251, 113, 133, 0.7); animation-delay: 0.6s;" viewBox="0 0 24 24"><path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        <svg class="float" style="width: 1.5rem; height: 1.5rem; color: rgba(244, 114, 182, 0.6); animation-delay: 0.9s;" viewBox="0 0 24 24"><path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        <svg class="float" style="width: 1rem; height: 1rem; color: rgba(253, 164, 175, 0.5); animation-delay: 1.2s;" viewBox="0 0 24 24"><path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== FOR YOU PAGE ==================== -->
+  <div id="page-for-you" class="page">
+    <button class="btn btn-back" onclick="showPage('dashboard')" style="opacity: 0.5;">
+      <svg style="width: 1.25rem; height: 1.25rem;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
+    </button>
+    <div id="kiss-rain" class="kiss-rain-container"></div>
+    <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; z-index: 40;">
+      <button class="center-kiss" onclick="triggerKiss()" aria-label="Kiss">💋</button>
+      <span id="kiss-text" class="kiss-text hidden">ummmmha!!!</span>
+    </div>
+    <div style="position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse at 20% 30%, rgba(254, 205, 211, 0.4) 0%, transparent 50%), radial-gradient(ellipse at 80% 70%, rgba(252, 231, 243, 0.4) 0%, transparent 50%);"></div>
+  </div>
+
+  <script>
+    const SECRET_WORD = 'vini';
+    const reasons = [
+      "The way your eyes sparkle when you smile",
+      "How you make even ordinary moments feel magical",
+      "Your gentle heart that cares so deeply",
+      "The sound of your laugh that melts my heart",
+      "How safe I feel in your arms",
+      "Your patience and understanding",
+      "The way you look at me like I'm your whole world",
+      "How you never give up on us",
+      "Your beautiful soul that shines so bright",
+      "Simply everything about you... you're perfect to me ❤️"
+    ];
+
+    // Show page function
+    function showPage(pageName) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      const page = document.getElementById('page-' + pageName);
+      if (page) {
+        page.classList.add('active');
+        if (pageName === 'forever') resetForeverPage();
+        if (pageName === 'for-you') startKissRain();
+      }
+    }
+
+    // Login handler
+    document.getElementById('login-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const input = document.getElementById('secret-input');
+      const error = document.getElementById('login-error');
+      if (input.value.toLowerCase().trim() === SECRET_WORD) {
+        showPage('dashboard');
+      } else {
+        input.classList.add('error');
+        error.classList.remove('hidden');
+        setTimeout(() => input.classList.remove('error'), 500);
+      }
+    });
+
+    // Populate reasons
+    const reasonsList = document.getElementById('reasons-list');
+    reasons.forEach((reason, i) => {
+      reasonsList.innerHTML += `
+        <div class="glass-card reason-card slide-up" style="animation-delay: ${i * 0.1}s;">
+          <svg style="width: 1.25rem; height: 1.25rem; color: var(--primary); flex-shrink: 0;" viewBox="0 0 24 24"><path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          <p class="font-romantic">${reason}</p>
+        </div>
+      `;
+    });
+
+    // Forever page functions
+    function resetForeverPage() {
+      document.getElementById('forever-quotes').classList.remove('hidden');
+      document.getElementById('forever-merge').classList.add('hidden');
+      document.getElementById('forever-final').classList.add('hidden');
+    }
+
+    function startForeverMerge() {
+      document.getElementById('forever-quotes').classList.add('hidden');
+      document.getElementById('forever-merge').classList.remove('hidden');
+      setTimeout(() => {
+        document.getElementById('forever-merge').classList.add('hidden');
+        document.getElementById('forever-final').classList.remove('hidden');
+      }, 4500);
+    }
+
+    // Kiss rain functions
+    let kissInterval;
+    function startKissRain() {
+      const container = document.getElementById('kiss-rain');
+      container.innerHTML = '';
+      const kisses = ['💋', '😘', '💕', '❤️', '💖'];
+      function createKiss() {
+        const kiss = document.createElement('span');
+        kiss.className = 'falling-kiss';
+        kiss.textContent = kisses[Math.floor(Math.random() * kisses.length)];
+        kiss.style.left = Math.random() * 100 + '%';
+        kiss.style.fontSize = (Math.random() * 1.5 + 1.5) + 'rem';
+        kiss.style.animationDuration = (Math.random() * 3 + 4) + 's';
+        kiss.style.animationDelay = Math.random() * 2 + 's';
+        container.appendChild(kiss);
+        setTimeout(() => kiss.remove(), 7000);
+      }
+      for (let i = 0; i < 15; i++) createKiss();
+      clearInterval(kissInterval);
+      kissInterval = setInterval(createKiss, 300);
+    }
+
+    function triggerKiss() {
+      const text = document.getElementById('kiss-text');
+      text.classList.remove('hidden');
+      text.style.animation = 'none';
+      setTimeout(() => text.style.animation = 'kissText 2s ease-out forwards', 10);
+      setTimeout(() => text.classList.add('hidden'), 2000);
+    }
+  </script>
+</body>
+</html>
